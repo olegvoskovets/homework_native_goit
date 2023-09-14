@@ -1,0 +1,29 @@
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+
+const AuthButton = ({ title, onPress, style }) => {
+  return (
+    <TouchableOpacity style={[styles.buttonSave, style]} onPress={onPress}>
+      <Text
+        style={{
+          color: "white",
+          fontSize: 16,
+          fontWeight: 400,
+        }}
+      >
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+const styles = StyleSheet.create({
+  buttonSave: {
+    padding: 16,
+    paddingLeft: 32,
+    paddingRight: 32,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FF6C00",
+  },
+});
+export default AuthButton;
