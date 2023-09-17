@@ -1,21 +1,30 @@
 import React, { Fragment, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CustomTextInput from "../CustomTextInput/CustomTextInput";
-import AuthButton from "../AuthButton/AuthButton";
+import CustomTextInput from "../../Components/CustomTextInput/CustomTextInput";
+import AuthButton from "../../Components/AuthButton/AuthButton";
+import BackgroundAuth from "../../Components/BackgroundAuth/BackgroundAuth";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { loginThunk } from "../../Redux/Auth/operations";
+import { selectUsers } from "../../Redux/Users/selectors";
 
 const LoginScreen = ({ toggleUser }) => {
-  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+  const [isVisiblePassword, setIsVisiblePassword] = useState(true);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const navigation = useNavigation();
+  const users = useSelector(selectUsers);
+  const dispatch = useDispatch();
 
   const onPressButton = () => {
-    console.log({ email, password });
+    console.log("login users", users);
+    dispatch(loginThunk({ data: { email, password }, users }));
 
     setPassword("");
     setEmail("");
   };
   return (
-    <Fragment>
+    <BackgroundAuth>
       <Text style={styles.title}>Увійти</Text>
       <View style={{ gap: 16, marginBottom: 43 }}>
         <CustomTextInput
@@ -50,14 +59,14 @@ const LoginScreen = ({ toggleUser }) => {
           Немає акаунту?
           <Text
             style={{ marginLeft: 10 }}
-            onPress={() => toggleUser((prev) => !prev)}
+            onPress={() => navigation.navigate("Registration")}
           >
             {" "}
             Зареєструватись
           </Text>
         </Text>
       </View>
-    </Fragment>
+    </BackgroundAuth>
   );
 };
 
@@ -84,6 +93,7 @@ const styles = StyleSheet.create({
   },
   accountText: {
     color: "#1B4371",
+    marginBottom: 25,
   },
 });
 export default LoginScreen;

@@ -1,0 +1,27 @@
+[
+  {
+    "email": "lena@ukr.net",
+    "login": "Lena",
+    "password": 11111
+  },
+  {
+    "email": "kolya@ukr.net",
+    "login": "Kolya",
+    "password": 11111
+  },
+  {
+    "email": "pavel@ukr.net",
+    "login": "Pavel",
+    "password": 11111
+  },
+  {
+    "email": "dasha@ukr.net",
+    "login": "Dasha",
+    "password": 11111
+  },
+  {
+    "email": "polya@ukr.net",
+    "login": "Polya",
+    "password": 11111
+  }
+]

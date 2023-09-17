@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import No_Photo from "../../assets/images_no.jpg";
 
-import AddBtn from "../AddBtn/AddBtn";
+import AddBtnSvg from "../AddBtnSvg/AddBtnSvg";
 
 const AddPhoto = () => {
   const { width: width_rec } = useWindowDimensions();
@@ -41,7 +41,7 @@ const AddPhoto = () => {
         style={styles.addPhoto}
         resizeMode="cover"
       ></ImageBackground>
-      <AddBtn fill_color="#FF6C00" width={37} style={styles.addBtn} />
+      <AddBtnSvg fill_color="#FF6C00" width={37} style={styles.addBtn} />
     </View>
   );
 };

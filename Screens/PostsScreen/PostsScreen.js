@@ -10,7 +10,8 @@ const PostsScreen = () => {
 
 const styles = StyleSheet.create({
   post: {
-    padding: 10,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
 });
 

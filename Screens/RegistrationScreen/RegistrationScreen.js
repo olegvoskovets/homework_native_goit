@@ -1,24 +1,34 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import AddPhoto from "../AddPhoto/AddPhoto";
+import AddPhoto from "../../Components/AddPhoto/AddPhoto";
 import { Fragment, useState } from "react";
-import CustomTextInput from "../CustomTextInput/CustomTextInput";
-import AuthButton from "../AuthButton/AuthButton";
+import CustomTextInput from "../../Components/CustomTextInput/CustomTextInput";
+import AuthButton from "../../Components/AuthButton/AuthButton";
+import BackgroundAuth from "../../Components/BackgroundAuth/BackgroundAuth";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { registrationThunk } from "../../Redux/Auth/operations";
+import { selectUsers } from "../../Redux/Users/selectors";
+import { addUserThunk } from "../../Redux/Users/operations";
 
 const RegistrationScreen = ({ toggleUser }) => {
-  const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+  const [isVisiblePassword, setIsVisiblePassword] = useState(true);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const users = useSelector(selectUsers);
 
   const onPressButton = () => {
-    console.log({ login, email, password });
+    dispatch(registrationThunk({ data: { login, email, password }, users }));
+    dispatch(addUserThunk({ login, email, password }));
     setLogin("");
     setPassword("");
     setEmail("");
   };
 
   return (
-    <Fragment>
+    <BackgroundAuth>
       <AddPhoto />
       <Text style={styles.title}>Реєстрація</Text>
 
@@ -62,7 +72,7 @@ const RegistrationScreen = ({ toggleUser }) => {
             Вже є акаунт?
             <Text
               style={{ marginLeft: 10 }}
-              onPress={() => toggleUser((prev) => !prev)}
+              onPress={() => navigation.navigate("Login")}
             >
               {" "}
               Увійти
@@ -70,7 +80,7 @@ const RegistrationScreen = ({ toggleUser }) => {
           </Text>
         </View>
       </View>
-    </Fragment>
+    </BackgroundAuth>
   );
 };
 const styles = StyleSheet.create({
