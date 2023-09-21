@@ -1,46 +1,91 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logOutThunk, loginThunk, registrationThunk } from "./operations";
+import {
+  logOutThunk,
+  loginFirebaseThunk,
+  loginThunk,
+  registrationThunk,
+  registrationThunkFirebaseDb,
+  updateUserProfileThunk,
+} from "./operations";
 
 const initialState = {
   currentUser: null,
+  currentUserFirebase: null,
   isLoading: false,
   isError: null,
+  imageCurrent: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    setImageCurrent: (state, { payload }) => {
+      state.imageCurrent = payload;
+    },
+  },
   extraReducers: (builder) =>
     builder
-      .addCase(loginThunk.pending, pending)
-      .addCase(loginThunk.fulfilled, loginFulfilled)
-      .addCase(loginThunk.rejected, rejected)
+      // .addCase(loginThunk.pending, pending)
+      // .addCase(loginThunk.fulfilled, loginFulfilled)
+      // .addCase(loginThunk.rejected, rejected)
 
       .addCase(logOutThunk.pending, pending)
       .addCase(logOutThunk.fulfilled, logOutFulfilled)
       .addCase(logOutThunk.rejected, rejected)
 
-      .addCase(registrationThunk.pending, pending)
-      .addCase(registrationThunk.fulfilled, registrationFulfilled)
-      .addCase(registrationThunk.rejected, rejected),
-});
+      // .addCase(registrationThunk.pending, pending)
+      // .addCase(registrationThunk.fulfilled, registrationFulfilled)
+      // .addCase(registrationThunk.rejected, rejected)
 
+      .addCase(registrationThunkFirebaseDb.pending, pending)
+      .addCase(
+        registrationThunkFirebaseDb.fulfilled,
+        registrationThunkFirebaseDbFulfilled
+      )
+      .addCase(registrationThunkFirebaseDb.rejected, rejected)
+
+      .addCase(loginFirebaseThunk.pending, pending)
+      .addCase(loginFirebaseThunk.fulfilled, loginFirebaseFulfilled)
+      .addCase(loginFirebaseThunk.rejected, rejected)
+
+      .addCase(updateUserProfileThunk.pending, pending)
+      .addCase(updateUserProfileThunk.fulfilled, updateFirebaseFulfilled)
+      .addCase(updateUserProfileThunk.rejected, rejected),
+});
+// /updateUserProfileThunk
 function loginFulfilled(state, { payload }) {
-  console.log("login payload ", payload);
   state.isLoading = false;
   state.currentUser = payload;
+  state.isError = null;
+}
+function loginFirebaseFulfilled(state, { payload }) {
+  // console.log("loginFirebaseFulfilled", payload);
+  state.isLoading = false;
+  state.currentUserFirebase = payload;
   state.isError = null;
 }
 
 function logOutFulfilled(state, { payload }) {
   state.isLoading = false;
   state.currentUser = payload;
+  state.currentUserFirebase = payload;
   state.isError = null;
 }
 function registrationFulfilled(state, { payload }) {
-  console.log("registration payload ", payload);
   state.isLoading = false;
   state.currentUser = payload;
+  state.isError = null;
+}
+
+function registrationThunkFirebaseDbFulfilled(state, { payload }) {
+  state.isLoading = false;
+  state.currentUserFirebase = payload;
+  state.isError = null;
+}
+function updateFirebaseFulfilled(state, { payload }) {
+  state.isLoading = false;
+  state.currentUserFirebase = payload;
   state.isError = null;
 }
 
@@ -54,3 +99,5 @@ function rejected(state) {
 }
 
 export const authReducer = authSlice.reducer;
+
+export const imageCurrentReducer = authSlice.actions.setImageCurrent;

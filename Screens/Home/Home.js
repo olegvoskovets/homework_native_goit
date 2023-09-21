@@ -56,6 +56,13 @@ const Home = () => {
       backBehavior="initialRoute"
       tabBarVisible="false"
       screenOptions={({ route }) => ({
+        tabBarStyle: {
+          height: 60,
+          width: "100%",
+
+          alignItems: "center",
+        },
+
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Posts") {
             let color;
@@ -91,6 +98,7 @@ const Home = () => {
           headerTitleStyle: {
             fontSize: 17,
             fontWeight: "500",
+            fontFamily: "Roboto-Black",
           },
 
           title: "Публікації",
@@ -98,14 +106,6 @@ const Home = () => {
           headerRightContainerStyle: {
             paddingRight: 16,
           },
-          // header: ({ navigator, route, options }) => {
-          //   const title = "Публікації";
-          //   return (
-          //     <View style={styles.textBorder}>
-          //       <Text style={styles.titleText}>{title}</Text>
-          //     </View>
-          //   );
-          // },
         }}
       />
       <Tabs.Screen
@@ -153,6 +153,14 @@ const Home = () => {
 };
 const styles = StyleSheet.create({
   textBorder: {
+    height: 50,
+    justifyContent: "center",
+    // borderColor: 'red',
+    borderWidth: 1,
+    borderBottomColor: "rgba(0, 0, 0, 0.30);",
+    shadowColor: "rgba(0, 0, 0, 0.30)",
+    fontFamily: "Roboto-Black",
+
     // padding: 16,
   },
   svgPosition: {
@@ -163,6 +171,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "500",
     textAlign: "center",
+    fontFamily: "Roboto-Black",
     // lineHeight: 1.2,
   },
 });

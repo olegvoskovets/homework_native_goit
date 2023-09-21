@@ -1,20 +1,28 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Profile from "../../Screens/Profile/Profile";
 import LoginScreen from "../../Screens/LoginScreen/LoginScreen";
 import RegistrationScreen from "../../Screens/RegistrationScreen/RegistrationScreen";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../Redux/Auth/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectCurrentUser,
+  selectCurrentUserFirebase,
+} from "../../Redux/Auth/selectors";
 import Home from "../../Screens/Home/Home";
 import CreatePostsScreen from "../../Screens/CreatePostsScreen/CreatePostsScreen";
 import { Button, Text, View } from "react-native";
 
+import { auth } from "../../config";
+import { authStateChanged } from "../../servicesApi/Api";
+
 const MainStack = createNativeStackNavigator();
 
 const MayNavigate = () => {
-  const currentUser = useSelector(selectCurrentUser);
+  const currentUser = useSelector(selectCurrentUserFirebase);
 
+  console.log(" currentUser", currentUser);
+  // console.log("ferebaseUser", authStateChanged());
   return (
     <NavigationContainer>
       <MainStack.Navigator

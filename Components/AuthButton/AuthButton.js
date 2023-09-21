@@ -5,9 +5,10 @@ const AuthButton = ({ title, onPress, style }) => {
     <TouchableOpacity style={[styles.buttonSave, style]} onPress={onPress}>
       <Text
         style={{
-          color: "white",
+          color: style.color,
           fontSize: 16,
           fontWeight: 400,
+          fontFamily: "Roboto-Black",
         }}
       >
         {title}

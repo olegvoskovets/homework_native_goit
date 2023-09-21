@@ -1,14 +1,15 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CustomTextInput from "../../Components/CustomTextInput/CustomTextInput";
 import AuthButton from "../../Components/AuthButton/AuthButton";
 import BackgroundAuth from "../../Components/BackgroundAuth/BackgroundAuth";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { loginThunk } from "../../Redux/Auth/operations";
-import { selectUsers } from "../../Redux/Users/selectors";
 
-const LoginScreen = ({ toggleUser }) => {
+import { selectUsers } from "../../Redux/Users/selectors";
+import { loginFirebaseThunk } from "../../Redux/Auth/operations";
+
+const LoginScreen = () => {
   const [isVisiblePassword, setIsVisiblePassword] = useState(true);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -17,12 +18,14 @@ const LoginScreen = ({ toggleUser }) => {
   const dispatch = useDispatch();
 
   const onPressButton = () => {
-    console.log("login users", users);
-    dispatch(loginThunk({ data: { email, password }, users }));
+    // dispatch(loginThunk({ data: { email, password }, users }));
+    // console.log("emeilPass", email, password);
+    dispatch(loginFirebaseThunk({ email, password }));
 
     setPassword("");
     setEmail("");
   };
+
   return (
     <BackgroundAuth>
       <Text style={styles.title}>Увійти</Text>
@@ -77,6 +80,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "500",
     marginBottom: 33,
+    fontFamily: "Roboto-Black",
   },
   visiblePassword: {
     color: "#1B4371",
@@ -94,6 +98,7 @@ const styles = StyleSheet.create({
   accountText: {
     color: "#1B4371",
     marginBottom: 25,
+    fontFamily: "Roboto-Black",
   },
 });
 export default LoginScreen;

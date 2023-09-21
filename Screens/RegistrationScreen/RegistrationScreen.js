@@ -6,7 +6,10 @@ import AuthButton from "../../Components/AuthButton/AuthButton";
 import BackgroundAuth from "../../Components/BackgroundAuth/BackgroundAuth";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { registrationThunk } from "../../Redux/Auth/operations";
+import {
+  registrationThunk,
+  registrationThunkFirebaseDb,
+} from "../../Redux/Auth/operations";
 import { selectUsers } from "../../Redux/Users/selectors";
 import { addUserThunk } from "../../Redux/Users/operations";
 
@@ -20,8 +23,16 @@ const RegistrationScreen = ({ toggleUser }) => {
   const users = useSelector(selectUsers);
 
   const onPressButton = () => {
-    dispatch(registrationThunk({ data: { login, email, password }, users }));
-    dispatch(addUserThunk({ login, email, password }));
+    // dispatch(
+    //   registrationThunk({ data: { login, email, password, url: null }, users })
+
+    // );
+    // dispatch(addUserThunk({ login, email, password, url: null }));
+
+    dispatch(
+      registrationThunkFirebaseDb({ email, password, displayName: login })
+    );
+
     setLogin("");
     setPassword("");
     setEmail("");
@@ -91,6 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "500",
     marginBottom: 33,
+    fontFamily: "Roboto-Black",
   },
   input: {
     // height: 50,
@@ -104,6 +116,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontSize: 16,
     fontWeight: "400",
+    fontFamily: "Roboto-Black",
   },
   visiblePassword: {
     color: "#1B4371",
@@ -129,6 +142,7 @@ const styles = StyleSheet.create({
   },
   accountText: {
     color: "#1B4371",
+    fontFamily: "Roboto-Black",
   },
 });
 

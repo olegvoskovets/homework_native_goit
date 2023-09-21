@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const AddBtn = ({ title, style, onPress }) => {
+const AddBtn = ({ title, style, onPress, children }) => {
   return (
     <TouchableOpacity style={[styles.buttonSave, style]} onPress={onPress}>
       <Text
@@ -12,6 +12,7 @@ const AddBtn = ({ title, style, onPress }) => {
       >
         {title}
       </Text>
+      {/* {children} */}
     </TouchableOpacity>
   );
 };

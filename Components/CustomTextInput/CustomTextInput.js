@@ -23,6 +23,7 @@ const CustomTextInput = (props) => {
         {
           borderColor: inputBorderColor,
           backgroundColor: inputBackgroundColor,
+          fontFamily: "Roboto-Black",
         },
       ]}
       onFocus={customOnFocus}
@@ -33,14 +34,13 @@ const CustomTextInput = (props) => {
 };
 const styles = StyleSheet.create({
   input: {
-    // height: 50,
     color: "#212121",
     padding: 16,
     paddingLeft: 16,
     paddingRight: 16,
-    // borderColor: "#E8E8E8",
+
     borderWidth: 1,
-    // backgroundColor: "#F6F6F6",
+
     borderRadius: 10,
     fontSize: 16,
     fontWeight: "400",

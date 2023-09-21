@@ -5,7 +5,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+
 import BackgroundImage from "../../assets/photo_bg.png";
 
 const BackgroundAuth = ({ children }) => {
