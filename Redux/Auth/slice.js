@@ -2,8 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   logOutThunk,
   loginFirebaseThunk,
-  loginThunk,
-  registrationThunk,
   registrationThunkFirebaseDb,
   updateUserProfileThunk,
 } from "./operations";
@@ -14,6 +12,7 @@ const initialState = {
   isLoading: false,
   isError: null,
   imageCurrent: null,
+  imageCurrentLocation: null,
 };
 
 const authSlice = createSlice({
@@ -26,17 +25,10 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) =>
     builder
-      // .addCase(loginThunk.pending, pending)
-      // .addCase(loginThunk.fulfilled, loginFulfilled)
-      // .addCase(loginThunk.rejected, rejected)
 
       .addCase(logOutThunk.pending, pending)
       .addCase(logOutThunk.fulfilled, logOutFulfilled)
       .addCase(logOutThunk.rejected, rejected)
-
-      // .addCase(registrationThunk.pending, pending)
-      // .addCase(registrationThunk.fulfilled, registrationFulfilled)
-      // .addCase(registrationThunk.rejected, rejected)
 
       .addCase(registrationThunkFirebaseDb.pending, pending)
       .addCase(

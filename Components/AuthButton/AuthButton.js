@@ -1,8 +1,12 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const AuthButton = ({ title, onPress, style }) => {
+const AuthButton = ({ title, onPress, style, disabled = false }) => {
   return (
-    <TouchableOpacity style={[styles.buttonSave, style]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.buttonSave, style]}
+      onPress={onPress}
+      disabled={disabled}
+    >
       <Text
         style={{
           color: style.color,

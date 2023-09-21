@@ -1,27 +1,38 @@
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import CurrentUser from "../../Components/CurrentUser/CurrentUser";
 import Maps from "../../Maps/Maps";
+import { useSelector } from "react-redux";
+import { selectPosts } from "../../Redux/Posts/selectors";
+import Post from "../../Components/Post/Post";
 
 const PostsScreen = () => {
+  const posts = useSelector(selectPosts);
+  console.log("posts", posts);
   return (
-    <View style={styles.post}>
+    <View style={styles.posts}>
       <CurrentUser />
       <Text>PostsScreen</Text>
 
-      <Maps />
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={posts}
+          renderItem={({ item }) => <Post post={item} />}
+          keyExtractor={(post) => post.pathUri}
+        />
+      </SafeAreaView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  post: {
+  posts: {
     flex: 1,
     padding: 16,
     backgroundColor: "#fff",
   },
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
+    width: "100%",
+
     alignItems: "center",
     justifyContent: "center",
   },

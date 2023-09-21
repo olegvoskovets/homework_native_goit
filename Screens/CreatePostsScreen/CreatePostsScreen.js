@@ -14,10 +14,17 @@ import { useEffect, useState } from "react";
 import AuthButton from "../../Components/AuthButton/AuthButton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import DeleteBtn from "../../Components/DeleteBtn/DeleteBtn";
-import { selectImageCurrent } from "../../Redux/Auth/selectors";
+import {
+  selectCurrentUser,
+  selectCurrentUserFirebase,
+  selectImageCurrent,
+} from "../../Redux/Auth/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { imageCurrentReducer } from "../../Redux/Auth/slice";
 import RegionLocation from "../../Components/RegionLocation/RegionLocation";
+import MapPinSvg from "../../Components/MapPinSvg/MapPinSvg";
+import { addPostThunk } from "../../Redux/Posts/operations";
+import { useNavigation } from "@react-navigation/native";
 
 const CreatePostsScreen = () => {
   const [isCamera, setIsCamera] = useState(null);
@@ -25,6 +32,10 @@ const CreatePostsScreen = () => {
   const [inputName, setInputName] = useState("");
   const [inputLocale, setInputLocale] = useState("");
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const locationImage = useSelector(selectImageCurrent);
+  const currentUser = useSelector(selectCurrentUserFirebase);
 
   useEffect(() => {
     setIsCamera(true);
@@ -35,7 +46,20 @@ const CreatePostsScreen = () => {
     //видаляємо фото яке нам не подобається , поки з альбому не видаляємо
     dispatch(imageCurrentReducer(null));
   };
-  const inputPlaceholder = () => {};
+  const handlePressSave = () => {
+    const newPost = {
+      currentUser,
+      locationImage: locationImage.locationImage,
+      inputName,
+      pathUri: pathUri.uri,
+    };
+    dispatch(addPostThunk(newPost));
+    nandleDelete();
+    setInputName("");
+    navigation.navigate("Posts");
+  };
+  console.log("locationImage", locationImage);
+
   return (
     <View style={styles.createPost}>
       <ScrollView>
@@ -64,14 +88,16 @@ const CreatePostsScreen = () => {
             <KeyboardAvoidingView
               behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
-              <TextInput
-                value={inputLocale}
-                style={styles.inputName}
-                placeholder="Місцевість ..."
-                placeholderTextColor="rgba(189,189,189,0.3)"
-                onChangeText={setInputLocale}
-              />
-              <RegionLocation />
+              <View style={styles.location_inform}>
+                <MapPinSvg stroke="#BDBDBD" />
+                <Text style={styles.location_inform_text}>
+                  {pathUri ? (
+                    <RegionLocation locationImage={locationImage} />
+                  ) : (
+                    "Місцевість ..."
+                  )}
+                </Text>
+              </View>
             </KeyboardAvoidingView>
           </View>
         </TouchableWithoutFeedback>
@@ -82,6 +108,8 @@ const CreatePostsScreen = () => {
               backgroundColor: pathUri ? "#FF6C00" : "#F6F6F6",
               color: pathUri ? "#fff" : "#BDBDBD",
             }}
+            disabled={pathUri ? false : true}
+            onPress={handlePressSave}
           />
         </View>
         <View
@@ -136,6 +164,23 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     fontSize: 16,
     color: "#212121",
+    fontWeight: "500",
+  },
+  location_inform: {
+    marginTop: 32,
+    height: 50,
+    borderBottomColor: "#e8e8e8",
+    borderBottomWidth: 1,
+    paddingTop: 16,
+    paddingBottom: 16,
+    fontSize: 16,
+
+    flexDirection: "row",
+  },
+  location_inform_text: {
+    height: "100%",
+    fontSize: 16,
+    color: "rgba(189, 189, 189, 0.3)",
     fontWeight: "500",
   },
   btn: {

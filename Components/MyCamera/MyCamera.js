@@ -7,10 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectImageCurrent } from "../../Redux/Auth/selectors";
 import { imageCurrentReducer } from "../../Redux/Auth/slice";
 
+import * as Location from "expo-location";
+
 export default function MyCamera() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const [locationImage, setLocationImage] = useState(null);
+  // const [location, setLocation] = useState(null);
   const dispatch = useDispatch();
 
   const pathUri = useSelector(selectImageCurrent);
@@ -30,6 +34,33 @@ export default function MyCamera() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+  const LocationImage = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      setErrorMsg("Permission to access location was denied");
+    }
+
+    // Location.setGoogleApiKey(apiKey);
+
+    let currentLocation = await Location.getCurrentPositionAsync({});
+
+    // let regionName = await Location.reverseGeocodeAsync({
+    //   latitude: currentLocation.coords.latitude,
+    //   longitude: currentLocation.coords.longitude,
+    // });
+    setLocationImage({
+      latitude: currentLocation.coords.latitude,
+      longitude: currentLocation.coords.longitude,
+    });
+    // setLocation(regionName);
+
+    // console.log(regionName, "nothing");
+    return {
+      latitude: currentLocation.coords.latitude,
+      longitude: currentLocation.coords.longitude,
+    };
+  };
 
   return (
     <>
@@ -62,9 +93,15 @@ export default function MyCamera() {
                     const { uri } = await cameraRef.takePictureAsync();
 
                     const asset = await MediaLibrary.createAssetAsync(uri);
-                    console.log("asset", asset);
+                    // console.log("asset", asset);
 
-                    dispatch(imageCurrentReducer(asset.uri));
+                    const location_image = await LocationImage();
+                    dispatch(
+                      imageCurrentReducer({
+                        uri: asset.uri,
+                        locationImage: location_image,
+                      })
+                    );
                     setPath(asset.uri);
                   }
                 }}
@@ -78,7 +115,7 @@ export default function MyCamera() {
         ) : (
           <Image
             style={{ width: "100%", height: "100%" }}
-            source={{ uri: pathUri }}
+            source={{ uri: pathUri.uri }}
           />
         )}
       </View>

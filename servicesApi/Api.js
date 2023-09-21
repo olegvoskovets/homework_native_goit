@@ -95,4 +95,8 @@ export const addUser = (data) => {
   return data;
 };
 
+export const addPost = (data) => {
+  return data;
+};
+
 // { message: "login або password не відповідають дійсності !!!" };
