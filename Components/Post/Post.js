@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import MapPinSvg from "../MapPinSvg/MapPinSvg";
 
 const Post = ({ post }) => {
-  console.log("post", post);
+  // console.log("post", post);
   const navigation = useNavigation();
   return (
     <View style={styles.post}>

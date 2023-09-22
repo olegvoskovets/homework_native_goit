@@ -16,7 +16,7 @@ import { deleteAllPostsThunk } from "../../Redux/Posts/operations";
 
 const PostsScreen = () => {
   const posts = useSelector(selectPosts);
-  console.log("POSTS", posts);
+  // console.log("POSTS", posts);
   const dispatch = useDispatch();
   const handleDeleteAllPosts = () => {
     dispatch(deleteAllPostsThunk());

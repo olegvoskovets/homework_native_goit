@@ -4,7 +4,7 @@ import userPhoto from "../../assets/user2.jpg";
 import guestPhoto from "../../assets/no_photo.png";
 
 const Comment = ({ post, guest }) => {
-  console.log("чий post", guest);
+  //   console.log("чий post", guest);
   const styles = StyleSheet.create({
     block: {
       alignSelf: guest ? "flex-end" : "flex-start",
