@@ -9,7 +9,7 @@ const AuthButton = ({ title, onPress, style, disabled = false }) => {
     >
       <Text
         style={{
-          color: style.color,
+          // color: style.color,
           fontSize: 16,
           fontWeight: 400,
           fontFamily: "Roboto-Black",

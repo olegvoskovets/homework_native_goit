@@ -13,7 +13,7 @@ import * as Location from "expo-location";
 
 export default function RegionLocation({ locationImage }) {
   // console.log("locationImage", locationImage);
-  const { latitude, longitude } = locationImage.locationImage;
+  const { latitude, longitude } = locationImage;
 
   const [location, setLocation] = useState(null);
   // const [regionLocation, setRegionLocation] = useState(null);

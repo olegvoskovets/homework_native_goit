@@ -3,9 +3,9 @@ import { StyleSheet, View, Dimensions } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
-const Maps = () => {
+const Maps = ({ locationMap }) => {
   const [location, setLocation] = useState(null);
-  console.log("LOCAT=", location);
+  // console.log("LOCAT=", location);
 
   useEffect(() => {
     (async () => {
@@ -14,12 +14,16 @@ const Maps = () => {
         console.log("Permission to access location was denied");
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
+      // let location = await Location.getCurrentPositionAsync({});
+      // const coords = {
+      //   latitude: location.coords.latitude,
+      //   longitude: location.coords.longitude,
+      // };
       // console.log("LOCATION: ", location);
+      const coords = {
+        latitude: locationMap.latitude,
+        longitude: locationMap.longitude,
+      };
       setLocation(coords);
     })();
   }, []);

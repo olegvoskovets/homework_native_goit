@@ -1,25 +1,48 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import CurrentUser from "../../Components/CurrentUser/CurrentUser";
-import Maps from "../../Maps/Maps";
-import { useSelector } from "react-redux";
+import Maps from "../../Components/Maps/Maps";
+import { useDispatch, useSelector } from "react-redux";
 import { selectPosts } from "../../Redux/Posts/selectors";
 import Post from "../../Components/Post/Post";
+import { deleteAllPostsThunk } from "../../Redux/Posts/operations";
 
 const PostsScreen = () => {
   const posts = useSelector(selectPosts);
-  console.log("posts", posts);
+  console.log("POSTS", posts);
+  const dispatch = useDispatch();
+  const handleDeleteAllPosts = () => {
+    dispatch(deleteAllPostsThunk());
+  };
   return (
     <View style={styles.posts}>
       <CurrentUser />
-      <Text>PostsScreen</Text>
+      {/* <Button
+        title="Видалити всі пости"
+        onPress={handleDeleteAllPosts}
+      ></Button> */}
+      {/* <ScrollView> */}
+      <SafeAreaView>
+        {/* <View style={styles.containerPosts}> */}
 
-      <SafeAreaView style={styles.container}>
         <FlatList
           data={posts}
-          renderItem={({ item }) => <Post post={item} />}
           keyExtractor={(post) => post.pathUri}
+          contentContainerStyle={{
+            gap: 32,
+          }}
+          renderItem={({ item }) => <Post post={item} />}
         />
+        {/* </View> */}
       </SafeAreaView>
+      {/* </ScrollView> */}
     </View>
   );
 };
@@ -27,15 +50,17 @@ const PostsScreen = () => {
 const styles = StyleSheet.create({
   posts: {
     flex: 1,
+    gap: 32,
     padding: 16,
     backgroundColor: "#fff",
   },
-  container: {
-    width: "100%",
 
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  // containerPosts: {
+  //   width: "100%",
+
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
 });
 
 export default PostsScreen;

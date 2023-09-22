@@ -26,6 +26,11 @@ import MapPinSvg from "../../Components/MapPinSvg/MapPinSvg";
 import { addPostThunk } from "../../Redux/Posts/operations";
 import { useNavigation } from "@react-navigation/native";
 
+import { customAlphabet } from "nanoid/non-secure";
+
+const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 10);
+// import { nanoid } from "nanoid";
+
 const CreatePostsScreen = () => {
   const [isCamera, setIsCamera] = useState(null);
   const pathUri = useSelector(selectImageCurrent);
@@ -48,6 +53,7 @@ const CreatePostsScreen = () => {
   };
   const handlePressSave = () => {
     const newPost = {
+      id: nanoid(),
       currentUser,
       locationImage: locationImage.locationImage,
       inputName,
@@ -58,7 +64,7 @@ const CreatePostsScreen = () => {
     setInputName("");
     navigation.navigate("Posts");
   };
-  console.log("locationImage", locationImage);
+  // console.log("locationImage", locationImage);
 
   return (
     <View style={styles.createPost}>
@@ -92,7 +98,9 @@ const CreatePostsScreen = () => {
                 <MapPinSvg stroke="#BDBDBD" />
                 <Text style={styles.location_inform_text}>
                   {pathUri ? (
-                    <RegionLocation locationImage={locationImage} />
+                    <RegionLocation
+                      locationImage={locationImage.locationImage}
+                    />
                   ) : (
                     "Місцевість ..."
                   )}

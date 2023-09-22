@@ -71,6 +71,7 @@ function registrationFulfilled(state, { payload }) {
 }
 
 function registrationThunkFirebaseDbFulfilled(state, { payload }) {
+  console.log("registrationThunkFirebaseDbFulfilled", payload);
   state.isLoading = false;
   state.currentUserFirebase = payload;
   state.isError = null;

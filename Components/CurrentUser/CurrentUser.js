@@ -6,16 +6,18 @@ import {
 } from "../../Redux/Auth/selectors";
 // import curImage from "../../assets/user1.jpg";
 import User2 from "../../assets/user2.jpg";
+import { auth } from "../../config";
 
 const CurrentUser = () => {
   const curremtUser = useSelector(selectCurrentUserFirebase);
   // const { url } = curremtUser;
-
+  // console.log("curremtUser", curremtUser);
+  // console.log("authcurremtUser", auth);
   return (
     <View style={styles.currentUser}>
       <Image style={styles.currentImage} source={User2} />
       <View>
-        <Text style={styles.textUser}>{curremtUser.login}</Text>
+        <Text style={styles.textUser}>{curremtUser.displayName}</Text>
         <Text style={styles.textEmail}>{curremtUser.email}</Text>
       </View>
     </View>

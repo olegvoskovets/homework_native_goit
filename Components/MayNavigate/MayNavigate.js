@@ -15,6 +15,8 @@ import { Button, Text, View } from "react-native";
 
 import { auth } from "../../config";
 import { authStateChanged } from "../../servicesApi/Api";
+import CommentsScreen from "../../Screens/CommentsScreen/CommentsScreen";
+import MapScreen from "../../Screens/MapScreen/MapScreen";
 
 const MainStack = createNativeStackNavigator();
 
@@ -61,6 +63,22 @@ const MayNavigate = () => {
               component={CreatePostsScreen}
             />
             <MainStack.Screen name="Profile" component={Profile} />
+            <MainStack.Screen
+              name="Comments"
+              component={CommentsScreen}
+              options={{
+                title: "Коментарі",
+                headerTitleAlign: "center",
+              }}
+            />
+            <MainStack.Screen
+              name="Maps"
+              component={MapScreen}
+              options={{
+                title: "Мапа",
+                headerTitleAlign: "center",
+              }}
+            />
           </>
         ) : (
           <>

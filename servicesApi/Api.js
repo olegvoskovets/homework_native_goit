@@ -13,17 +13,17 @@ export const authStateChanged = async (onChange = () => {}) => {
   });
 };
 
-export const registerDB = async ({ email, password }) => {
-  // console.log("email", email);
+export const registerDB = async ({ email, password, displayName }) => {
+  // console.log("email", { email, password, displayName });
   try {
-    // console.log("registerDB- ", auth?.currentUser.email);
+    // console.log("registerDB- ", auth);
     await createUserWithEmailAndPassword(auth, email, password);
-    const {
-      user: { email: userEmail, displayName, uid, photoURL },
-    } = auth.currentUser;
+    // const {
+    //   user: { email: userEmail, displayName, uid, photoURL },
+    // } = auth.currentUser;
 
-    // console.log("DATAREGISTR", data);
-    return { email: userEmail, displayName, uid, photoURL };
+    // console.log("DATAREGISTRauth.currentUser", auth.currentUser);
+    return { email, displayName, photoURL: auth.photoURL };
   } catch (error) {
     console.log("registerDBERROR", error);
     throw error;
@@ -31,14 +31,17 @@ export const registerDB = async ({ email, password }) => {
 };
 
 export const loginDB = async ({ email, password }) => {
-  // console.log("loginDB_User-Auth ", auth?.currentUser);
+  // console.log("loginDB_User-Auth ", auth);
   // console.log("loginDB- ", { email, password });
   try {
-    const {
-      user: { email: userEmail, displayName, uid, photoURL },
-    } = await signInWithEmailAndPassword(auth, email, password);
-    // console.log("loginDBcredentials", credentials);
-    return { email: userEmail, displayName, uid, photoURL };
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    // console.log("USER", user);
+    return {
+      email: user.email,
+      displayName: user.displayName,
+      uid: user.uid,
+      photoURL: user.photoURL,
+    };
   } catch (error) {
     console.log("loginDBERROR", error);
     throw error;
@@ -98,5 +101,15 @@ export const addUser = (data) => {
 export const addPost = (data) => {
   return data;
 };
+export const deleteAllPosts = () => {
+  return null;
+};
 
 // { message: "login або password не відповідають дійсності !!!" };
+export const getPostId = (id) => {
+  return id;
+};
+
+export const addComments = (data) => {
+  return data;
+};

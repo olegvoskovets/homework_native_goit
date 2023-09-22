@@ -1,9 +1,12 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import Maps from "../../Components/Maps/Maps";
 
-const MapScreen = () => {
+const MapScreen = (props) => {
+  const { location } = props.route.params;
+  console.log("location", location);
   return (
-    <View>
-      <Text>MapScreen</Text>
+    <View style={{ flex: 1 }}>
+      <Maps locationMap={location} />
     </View>
   );
 };

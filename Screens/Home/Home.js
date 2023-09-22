@@ -26,18 +26,7 @@ import { logOutThunk } from "../../Redux/Auth/operations";
 const Tabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function HomeStack() {
-  return (
-    <View>
-      <Text>GGGGGGGGGGGG</Text>
-    </View>
-    // <Stack.Navigator>
-    //   <Stack.Screen name="Home" component={Home} />
-    //   <Stack.Screen name="CreatePost" component={CreatePostsScreen} />
-    //   <Stack.Screen name="Profile" component={Profile} />
-    // </Stack.Navigator>
-  );
-}
+
 
 const Home = () => {
   const navigation = useNavigation();

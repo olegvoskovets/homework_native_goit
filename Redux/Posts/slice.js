@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addPostThunk } from "./operations";
+import {
+  addPostThunk,
+  deleteAllPostsThunk,
+  setPostIdThunk,
+} from "./operations";
 
 const initialState = {
   posts: [],
   isLoading: false,
   isError: null,
+  currentPostId: null,
 };
 
 const postsSlice = createSlice({
@@ -15,7 +20,15 @@ const postsSlice = createSlice({
     builder
       .addCase(addPostThunk.pending, pending)
       .addCase(addPostThunk.fulfilled, addPostFulfilled)
-      .addCase(addPostThunk.rejected, rejected),
+      .addCase(addPostThunk.rejected, rejected)
+
+      .addCase(deleteAllPostsThunk.pending, pending)
+      .addCase(deleteAllPostsThunk.fulfilled, deleteAllPostsFulfilled)
+      .addCase(deleteAllPostsThunk.rejected, rejected)
+
+      .addCase(setPostIdThunk.pending, pending)
+      .addCase(setPostIdThunk.fulfilled, setPostIdFulfilled)
+      .addCase(setPostIdThunk.rejected, rejected),
 });
 
 function addPostFulfilled(state, { payload }) {
@@ -24,13 +37,23 @@ function addPostFulfilled(state, { payload }) {
   state.posts = [...state.posts, payload];
 }
 
+function deleteAllPostsFulfilled(state) {
+  state.isLoading = false;
+  state.isError = null;
+  state.posts = [];
+}
+function setPostIdFulfilled(state, { payload }) {
+  state.isLoading = false;
+  state.isError = null;
+  state.currentPostId = payload;
+}
+
 function pending(state) {
   state.isLoading = true;
   state.isError = null;
 }
 function rejected(state) {
   state.isLoading = false;
-
   state.isError = true;
 }
 

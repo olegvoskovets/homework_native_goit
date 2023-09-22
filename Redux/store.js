@@ -14,6 +14,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { commentsReducer } from "./Comments/slice";
 
 const postsConfig = {
   key: "posts",
@@ -27,15 +28,21 @@ const usersConfig = {
   key: "users",
   storage: AsyncStorage,
 };
+const commentConfig = {
+  key: "comments",
+  storage: AsyncStorage,
+};
 const posts = persistReducer(postsConfig, postsReducer);
 const auth = persistReducer(authConfig, authReducer);
 const users = persistReducer(usersConfig, usersReducer);
+const comments = persistReducer(commentConfig, commentsReducer);
 
 const store = configureStore({
   reducer: {
     posts,
     auth,
     users,
+    comments,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
