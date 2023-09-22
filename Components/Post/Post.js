@@ -3,10 +3,21 @@ import MessageSvg from "../MessageSvg/MessageSvg";
 import RegionLocation from "../RegionLocation/RegionLocation";
 import { useNavigation } from "@react-navigation/native";
 import MapPinSvg from "../MapPinSvg/MapPinSvg";
+import { useSelector } from "react-redux";
+import { selectComments } from "../../Redux/Comments/selectors";
 
 const Post = ({ post }) => {
-  // console.log("post", post);
+  console.log("post", post);
   const navigation = useNavigation();
+  const comments = useSelector(selectComments);
+  console.log("comments", comments);
+  const getCounterComments = () => {
+    let counter = 0;
+    comments.forEach((element) => {
+      if (element.postId === post.id) counter += 1;
+    });
+    return counter;
+  };
   return (
     <View style={styles.post}>
       <Image style={styles.imagePost} source={{ uri: post.pathUri }} />
@@ -17,7 +28,7 @@ const Post = ({ post }) => {
             stroke="#BDBDBD"
             onPress={() => navigation.navigate("Comments", { postId: post.id })}
           />
-          <Text>0</Text>
+          <Text>{getCounterComments()}</Text>
         </View>
         <View style={styles.locationStiles}>
           <MapPinSvg
