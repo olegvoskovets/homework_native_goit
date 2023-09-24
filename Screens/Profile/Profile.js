@@ -20,15 +20,13 @@ const Profile = () => {
 
   const currentUser = useSelector(selectCurrentUserFirebase);
   const posts = useSelector(selectPosts);
-  // const comments = useSelector(selectComments);
+
   const currentUserPosts = () => {
     return posts.filter((post) => post.currentUser.uid === currentUser.uid);
   };
-  // console.log("posts", posts);
-  // console.log("currentUser", currentUser);
 
   const currentPoststUser = currentUserPosts();
-  // console.log("currentPoststUser", currentPoststUser);
+
   return (
     <ScrollView>
       <View style={{}}>

@@ -13,6 +13,7 @@ const initialState = {
   isError: null,
   imageCurrent: null,
   imageCurrentLocation: null,
+  imageAvatar: null,
 };
 
 const authSlice = createSlice({
@@ -21,6 +22,10 @@ const authSlice = createSlice({
   reducers: {
     setImageCurrent: (state, { payload }) => {
       state.imageCurrent = payload;
+    },
+    setAvatarImage: (state, { payload }) => {
+    
+      state.imageAvatar = payload;
     },
   },
   extraReducers: (builder) =>
@@ -52,7 +57,7 @@ function loginFulfilled(state, { payload }) {
   state.isError = null;
 }
 function loginFirebaseFulfilled(state, { payload }) {
-  // console.log("loginFirebaseFulfilled", payload);
+
   state.isLoading = false;
   state.currentUserFirebase = payload;
   state.isError = null;
@@ -71,13 +76,11 @@ function registrationFulfilled(state, { payload }) {
 }
 
 function registrationThunkFirebaseDbFulfilled(state, { payload }) {
- 
   state.isLoading = false;
   state.currentUserFirebase = payload;
   state.isError = null;
 }
 function updateFirebaseFulfilled(state, { payload }) {
- 
   state.isLoading = false;
   state.currentUserFirebase = payload;
   state.isError = null;
@@ -95,3 +98,4 @@ function rejected(state) {
 export const authReducer = authSlice.reducer;
 
 export const imageCurrentReducer = authSlice.actions.setImageCurrent;
+export const imageAvatarReducer = authSlice.actions.setAvatarImage;

@@ -17,6 +17,7 @@ import { auth } from "../../config";
 import { authStateChanged } from "../../servicesApi/Api";
 import CommentsScreen from "../../Screens/CommentsScreen/CommentsScreen";
 import MapScreen from "../../Screens/MapScreen/MapScreen";
+import PhotoScreen from "../../Screens/PhotoScreen/PhotoScreen";
 
 const MainStack = createNativeStackNavigator();
 
@@ -76,6 +77,14 @@ const MayNavigate = () => {
               component={MapScreen}
               options={{
                 title: "Мапа",
+                headerTitleAlign: "center",
+              }}
+            />
+            <MainStack.Screen
+              name="PhotoScreen"
+              component={PhotoScreen}
+              options={{
+                title: "Фото",
                 headerTitleAlign: "center",
               }}
             />

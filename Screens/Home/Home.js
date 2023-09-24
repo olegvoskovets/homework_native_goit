@@ -33,7 +33,7 @@ const Home = () => {
   const handleClickGoBack = () => {
     navigation.goBack();
   };
-  console.log("RENDER HOME");
+
   const handleClose = () => {
     dispatch(logOutThunk());
   };

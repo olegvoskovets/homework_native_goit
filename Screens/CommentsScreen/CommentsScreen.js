@@ -33,20 +33,17 @@ const CommentsScreen = (props) => {
     (comment) => comment.postId === postId
   );
 
-  // console.log("posts", posts);
-  // useEffect(() => {
-  //   dispatch(setPostIdThunk(postId));
-  // }, []);
   const currentPost = posts.find((post) => post.id === postId);
-  // console.log("currentCommentsPost", currentCommentsPost);
+
   const handleSave = () => {
-    const comment = {
-      comment: textInput,
-      user: currentUser.uid,
-      postId,
-      date: formatDate(new Date()),
-    };
     if (textInput) {
+      const comment = {
+        comment: textInput,
+        user: currentUser.uid,
+        postId,
+        date: formatDate(new Date()),
+      };
+
       dispatch(addCommentsThunk(comment));
       setTextInput(null);
       navigation.navigate("Posts");

@@ -18,15 +18,17 @@ import {
 } from "../../Redux/Posts/operations";
 import { deleteAllCommentsThunk } from "../../Redux/Comments/operations";
 import { useEffect } from "react";
+import { getUsersDB } from "../../servicesApi/Api";
 
 const PostsScreen = () => {
   const posts = useSelector(selectPosts);
 
-  // console.log("POSTS", posts);
   const dispatch = useDispatch();
-  const handleDeleteAllPosts = () => {
-    dispatch(deleteAllPostsThunk());
-    dispatch(deleteAllCommentsThunk());
+  const handleDeleteAllPosts = async () => {
+    // dispatch(deleteAllPostsThunk());
+    // dispatch(deleteAllCommentsThunk());
+    const users = await getUsersDB();
+    console.log("users", users);
   };
   useEffect(() => {
     dispatch(getPostsThunk());
@@ -34,10 +36,7 @@ const PostsScreen = () => {
   return (
     <View style={styles.posts}>
       <CurrentUser />
-      {/* <Button
-        title="Видалити всі пости"
-        onPress={handleDeleteAllPosts}
-      ></Button> */}
+      {/* <Button title="get Users" onPress={handleDeleteAllPosts}></Button> */}
       {/* <ScrollView> */}
       <SafeAreaView>
         {/* <View style={styles.containerPosts}> */}

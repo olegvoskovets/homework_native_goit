@@ -97,15 +97,16 @@ export default function MyCamera() {
                     // console.log("asset", asset);
 
                     const location_image = await LocationImage();
-                    console.log("asset.uri", asset.uri);
+                    // console.log("asset.uri", asset.uri);
 
                     // const path_uri = await uploadImage(asset.uri);
                     dispatch(
                       imageCurrentReducer({
                         uri,
-                        locationImage,
+                        locationImage: location_image,
                       })
                     );
+
                     // setPath(asset.uri);
                   }
                 }}

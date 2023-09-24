@@ -34,7 +34,7 @@ const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 10);
 
 const CreatePostsScreen = () => {
   const [isCamera, setIsCamera] = useState(null);
-  // const pathUri = useSelector(selectImageCurrent);
+  const pathUri = useSelector(selectImageCurrent);
   const [inputName, setInputName] = useState("");
   const [inputLocale, setInputLocale] = useState("");
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ const CreatePostsScreen = () => {
     setIsCamera(true);
   }, []);
 
-  // console.log("</Keyboard.dismiss>=", Keyboard._currentlyShowing, "");
+
   const nandleDelete = () => {
     //видаляємо фото яке нам не подобається , поки з альбому не видаляємо
     dispatch(imageCurrentReducer(null));
@@ -66,7 +66,7 @@ const CreatePostsScreen = () => {
     setInputName("");
     navigation.navigate("Posts");
   };
-  // console.log("currentUser===", currentUser);
+  
 
   return (
     <View style={styles.createPost}>
@@ -101,7 +101,7 @@ const CreatePostsScreen = () => {
                 <Text style={styles.location_inform_text}>
                   {pathUri ? (
                     <RegionLocation
-                      locationImage={locationImage.locationImage}
+                      locationImage={currentPhoto.locationImage}
                     />
                   ) : (
                     "Місцевість ..."

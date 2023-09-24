@@ -7,10 +7,17 @@ import {
 import No_Photo from "../../assets/images_no.jpg";
 
 import AddBtnSvg from "../AddBtnSvg/AddBtnSvg";
+import { useState } from "react";
+import MyCamera from "../MyCamera/MyCamera";
+import { useNavigation } from "@react-navigation/native";
+import { selectCurrentUserFirebase } from "../../Redux/Auth/selectors";
+import { useSelector } from "react-redux";
 
 const AddPhoto = () => {
   const { width: width_rec } = useWindowDimensions();
+  const currentUser = useSelector(selectCurrentUserFirebase);
 
+  const navigation = useNavigation();
   const styles = StyleSheet.create({
     image_container: {
       position: "absolute",
@@ -34,14 +41,24 @@ const AddPhoto = () => {
     },
   });
 
+  const handleUploadAvatar = () => {
+    // setUploadAvatar((prev) => !prev);
+    navigation.navigate("PhotoScreen");
+  };
+
   return (
     <View style={styles.image_container}>
       <ImageBackground
-        source={No_Photo}
+        source={currentUser.photoURL ? { uri: currentUser.photoURL } : No_Photo}
         style={styles.addPhoto}
         resizeMode="cover"
       ></ImageBackground>
-      <AddBtnSvg fill_color="#FF6C00" width={37} style={styles.addBtn} />
+      <AddBtnSvg
+        fill_color="#FF6C00"
+        width={37}
+        style={styles.addBtn}
+        onPress={handleUploadAvatar}
+      />
     </View>
   );
 };

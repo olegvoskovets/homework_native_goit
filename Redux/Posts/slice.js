@@ -54,7 +54,6 @@ function setPostIdFulfilled(state, { payload }) {
 }
 
 function getPostsFulfilled(state, { payload }) {
-  // console.log("PAYLOAD==", payload);
   state.isLoading = false;
   state.isError = null;
   state.posts = [...payload];

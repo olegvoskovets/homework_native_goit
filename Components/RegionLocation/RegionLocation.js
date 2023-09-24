@@ -12,13 +12,11 @@ let apiKey = "AIzaSyAIg7KidzYC_Ioh0_9yHS9hYFFxBueubik";
 import * as Location from "expo-location";
 
 export default function RegionLocation({ locationImage }) {
-  // console.log("locationImage", locationImage);
+
   const { latitude, longitude } = locationImage;
 
   const [location, setLocation] = useState(null);
-  // const [regionLocation, setRegionLocation] = useState(null);
-  // const [errorMsg, setErrorMsg] = useState(null);
-  // const [getLocation, setGetLocation] = useState(false);
+  
 
   useEffect(() => {
     (async () => {

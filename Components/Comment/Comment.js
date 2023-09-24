@@ -2,9 +2,11 @@ import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import userPhoto from "../../assets/user2.jpg";
 import guestPhoto from "../../assets/no_photo.png";
+import { useSelector } from "react-redux";
+import { selectCurrentUserFirebase } from "../../Redux/Auth/selectors";
 
 const Comment = ({ post, guest }) => {
-  //   console.log("чий post", guest);
+  const currentUser = useSelector(selectCurrentUserFirebase);
   const styles = StyleSheet.create({
     block: {
       alignSelf: guest ? "flex-end" : "flex-start",
@@ -43,7 +45,10 @@ const Comment = ({ post, guest }) => {
           <Text style={styles.textDate}>{post.date} </Text>
         </View>
 
-        <Image style={styles.user} source={!guest ? guestPhoto : userPhoto} />
+        <Image
+          style={styles.user}
+          source={guest ? { uri: currentUser.photoURL } : userPhoto}
+        />
       </View>
     </View>
   );

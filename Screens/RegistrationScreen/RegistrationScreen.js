@@ -23,12 +23,7 @@ const RegistrationScreen = ({ toggleUser }) => {
   const users = useSelector(selectUsers);
 
   const onPressButton = () => {
-    // dispatch(
-    //   registrationThunk({ data: { login, email, password, url: null }, users })
 
-    // );
-    // dispatch(addUserThunk({ login, email, password, url: null }));
-    // console.log("onPressButton", { email, password, displayName: login });
     dispatch(
       registrationThunkFirebaseDb({ email, password, displayName: login })
     );

@@ -31,6 +31,7 @@ const commentsSlice = createSlice({
 });
 
 function addCommentsFulfilled(state, { payload }) {
+  // console.log("addCommentsFulfilled", payload);
   state.isLoading = false;
   state.isError = null;
   state.comments = [...state.comments, payload];

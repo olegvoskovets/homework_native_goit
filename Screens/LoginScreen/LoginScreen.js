@@ -18,8 +18,7 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
 
   const onPressButton = () => {
-    // dispatch(loginThunk({ data: { email, password }, users }));
-    // console.log("emeilPass", email, password);
+   
     dispatch(loginFirebaseThunk({ email, password }));
 
     setPassword("");
