@@ -23,7 +23,7 @@ const MainStack = createNativeStackNavigator();
 const MayNavigate = () => {
   const currentUser = useSelector(selectCurrentUserFirebase);
 
-  console.log(" currentUser", currentUser);
+  //  console.log("MayNavigate");
   // console.log("ferebaseUser", authStateChanged());
   return (
     <NavigationContainer>
@@ -62,7 +62,7 @@ const MayNavigate = () => {
               name="CreatePostsScreen"
               component={CreatePostsScreen}
             />
-            <MainStack.Screen name="Profile" component={Profile} />
+            <MainStack.Screen name="Profile" options={{}} component={Profile} />
             <MainStack.Screen
               name="Comments"
               component={CommentsScreen}

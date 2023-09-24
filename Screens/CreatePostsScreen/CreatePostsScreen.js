@@ -27,19 +27,20 @@ import { addPostThunk } from "../../Redux/Posts/operations";
 import { useNavigation } from "@react-navigation/native";
 
 import { customAlphabet } from "nanoid/non-secure";
+import { uploadImage } from "../../servicesApi/Api";
 
 const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 10);
 // import { nanoid } from "nanoid";
 
 const CreatePostsScreen = () => {
   const [isCamera, setIsCamera] = useState(null);
-  const pathUri = useSelector(selectImageCurrent);
+  // const pathUri = useSelector(selectImageCurrent);
   const [inputName, setInputName] = useState("");
   const [inputLocale, setInputLocale] = useState("");
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const locationImage = useSelector(selectImageCurrent);
+  const currentPhoto = useSelector(selectImageCurrent);
   const currentUser = useSelector(selectCurrentUserFirebase);
 
   useEffect(() => {
@@ -51,20 +52,21 @@ const CreatePostsScreen = () => {
     //видаляємо фото яке нам не подобається , поки з альбому не видаляємо
     dispatch(imageCurrentReducer(null));
   };
-  const handlePressSave = () => {
+  const handlePressSave = async () => {
+    const path_uri = await uploadImage(currentPhoto.uri);
     const newPost = {
       id: nanoid(),
       currentUser,
-      locationImage: locationImage.locationImage,
+      locationImage: currentPhoto.locationImage,
       inputName,
-      pathUri: pathUri.uri,
+      pathUri: path_uri,
     };
     dispatch(addPostThunk(newPost));
     nandleDelete();
     setInputName("");
     navigation.navigate("Posts");
   };
-  // console.log("locationImage", locationImage);
+  // console.log("currentUser===", currentUser);
 
   return (
     <View style={styles.createPost}>

@@ -21,8 +21,10 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     justifyContent: "flex-end",
+    paddingTop: 100,
   },
   auth: {
+    // minHeight: "75%",
     backgroundColor: "white",
     borderTopEndRadius: 25,
     borderTopStartRadius: 25,

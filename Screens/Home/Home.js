@@ -26,8 +26,6 @@ import { logOutThunk } from "../../Redux/Auth/operations";
 const Tabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-
-
 const Home = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -35,7 +33,7 @@ const Home = () => {
   const handleClickGoBack = () => {
     navigation.goBack();
   };
-
+  console.log("RENDER HOME");
   const handleClose = () => {
     dispatch(logOutThunk());
   };

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addCommentsThunk } from "./operations";
+import {
+  addCommentsThunk,
+  deleteAllCommentsThunk,
+  getCommentsThunk,
+} from "./operations";
 
 const initialState = {
   comments: [],
@@ -15,14 +19,31 @@ const commentsSlice = createSlice({
     builder
       .addCase(addCommentsThunk.pending, pending)
       .addCase(addCommentsThunk.fulfilled, addCommentsFulfilled)
-      .addCase(addCommentsThunk.rejected, rejected),
+      .addCase(addCommentsThunk.rejected, rejected)
+
+      .addCase(deleteAllCommentsThunk.pending, pending)
+      .addCase(deleteAllCommentsThunk.fulfilled, deleteAllCommentsFulfilled)
+      .addCase(deleteAllCommentsThunk.rejected, rejected)
+
+      .addCase(getCommentsThunk.pending, pending)
+      .addCase(getCommentsThunk.fulfilled, getCommentsFulfilled)
+      .addCase(getCommentsThunk.rejected, rejected),
 });
 
 function addCommentsFulfilled(state, { payload }) {
-  //   console.log("addCommentsFulfilled", payload);
   state.isLoading = false;
   state.isError = null;
   state.comments = [...state.comments, payload];
+}
+function deleteAllCommentsFulfilled(state) {
+  state.isLoading = false;
+  state.isError = null;
+  state.comments = [];
+}
+function getCommentsFulfilled(state, { payload }) {
+  state.isLoading = false;
+  state.isError = null;
+  state.comments = [...payload];
 }
 
 function pending(state) {

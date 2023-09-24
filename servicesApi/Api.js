@@ -4,7 +4,10 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../config";
+import { auth, db, storage } from "../config";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export const authStateChanged = async (onChange = () => {}) => {
   onAuthStateChanged((user) => {
@@ -14,16 +17,18 @@ export const authStateChanged = async (onChange = () => {}) => {
 };
 
 export const registerDB = async ({ email, password, displayName }) => {
-  // console.log("email", { email, password, displayName });
+  // console.log("registerDBUser", { email, password, displayName });
   try {
-    // console.log("registerDB- ", auth);
-    await createUserWithEmailAndPassword(auth, email, password);
-    // const {
-    //   user: { email: userEmail, displayName, uid, photoURL },
-    // } = auth.currentUser;
+    const result = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+      displayName
+    );
 
-    // console.log("DATAREGISTRauth.currentUser", auth.currentUser);
-    return { email, displayName, photoURL: auth.photoURL };
+    const newUser = await updateUserProfile({ displayName });
+
+    return newUser;
   } catch (error) {
     console.log("registerDBERROR", error);
     throw error;
@@ -56,9 +61,11 @@ export const updateUserProfile = async (update) => {
     // оновлюємо його профайл
     try {
       await updateProfile(user, update);
+      // const userUpdate = auth.currentUser;
 
-      const { email: userEmail, displayName, uid, photoURL } = auth.user;
-      return { email: userEmail, displayName, uid, photoURL };
+      const { email, displayName, uid, photoURL } = user;
+      console.log("user", { email, displayName, uid, photoURL });
+      return { email, displayName, uid, photoURL };
     } catch (error) {
       throw error;
     }
@@ -67,7 +74,7 @@ export const updateUserProfile = async (update) => {
 
 export const Login = (data) => {
   const users = data.users;
-  console.log("auth- ", auth);
+  // console.log("auth- ", auth);
   const user = users.find((item) => item.email === data.data.email);
 
   if (!user) {
@@ -98,7 +105,24 @@ export const addUser = (data) => {
   return data;
 };
 
-export const addPost = (data) => {
+export const addPost = async (data) => {
+  const { id, currentUser, locationImage, inputName, pathUri } = data;
+  // console.log("addPost", addPost);
+  try {
+    const docRef = await addDoc(collection(db, "posts"), {
+      id,
+      currentUser,
+      locationImage,
+      inputName,
+      pathUri,
+    });
+
+    // console.log("Document written with docRef: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    throw e;
+  }
+
   return data;
 };
 export const deleteAllPosts = () => {
@@ -110,6 +134,80 @@ export const getPostId = (id) => {
   return id;
 };
 
-export const addComments = (data) => {
+export const addComments = async (data) => {
+  try {
+    const docRef = await addDoc(collection(db, "comments"), data);
+
+    console.log("Document written with docRef: ", docRef);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    throw e;
+  }
+
   return data;
+};
+export const deleteAllComments = () => {
+  return null;
+};
+
+export const getPostsDB = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "posts"));
+    // Перевіряємо у консолі отримані дані
+    // console.log("getPostsDB", snapshot);
+    let posts = [];
+    snapshot.forEach((doc) => posts.push(doc.data()));
+    // Повертаємо масив обʼєктів у довільній формі
+    return posts;
+  } catch (error) {
+    console.log("error", error);
+    throw error;
+  }
+};
+export const getCommentsDB = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "comments"));
+    // Перевіряємо у консолі отримані дані
+    // console.log("getPostsDB", snapshot);
+    let comments = [];
+    snapshot.forEach((doc) => comments.push(doc.data()));
+    // Повертаємо масив обʼєктів у довільній формі
+    // console.log("getCommentsDB", comments);
+    return comments;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const uploadImage = async (uri, name) => {
+  try {
+    // const { uid } = auth.currentUser;
+    // if (!uid) throw new Error("unauthorized");
+    const filename = name || uri.split("/").pop();
+    console.log("uploadAvatar filename", filename);
+    const response = await fetch(uri);
+    const file = await response.blob();
+    const avatarRef = ref(storage, `images/${filename}`);
+    await uploadBytes(avatarRef, file);
+    return await getDownloadURL(avatarRef);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const uploadAvatar = async (uri, name) => {
+  try {
+    // const { uid } = auth.currentUser;
+    // if (!uid) throw new Error("unauthorized");
+    const filename = name || uri.split("/").pop();
+    console.log("uploadAvatar filename", filename);
+    const response = await fetch(uri);
+    const file = await response.blob();
+    const avatarRef = ref(storage, `avatar/${filename}`);
+    await uploadBytes(avatarRef, file);
+    return await getDownloadURL(avatarRef);
+  } catch (error) {
+    console.log(error);
+  }
 };

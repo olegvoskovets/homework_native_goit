@@ -8,6 +8,24 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 // const firebaseConfig = {
+//   apiKey: "AIzaSyCyRf7K8bW3-IWrm-d1bPKvXSjHyt_TxGQ",
+//   authDomain: "native-image-location.firebaseapp.com",
+//   projectId: "native-image-location",
+//   storageBucket: "native-image-location.appspot.com",
+//   messagingSenderId: "880740516980",
+//   appId: "1:880740516980:web:ec463fbff7248ca992bd21",
+//   measurementId: "G-4Z0W57306G",
+// };
+const firebaseConfig = {
+  apiKey: "AIzaSyDYMqI_xwcvpi7H37ud_iUq1eey29B9A4s",
+  authDomain: "image-native-project.firebaseapp.com",
+  projectId: "image-native-project",
+  storageBucket: "image-native-project.appspot.com",
+  messagingSenderId: "883348581762",
+  appId: "1:883348581762:web:c02b4e8bc3d762c65c739b",
+};
+
+// const firebaseConfig = {
 //   apiKey: "AIzaSyCk0bFOqtPQHNaKFK7evD1At2SRAHMWdp0",
 //   authDomain: "projectimagelocationnative.firebaseapp.com",
 //   projectId: "projectimagelocationnative",
@@ -15,15 +33,6 @@ import { getStorage } from "firebase/storage";
 //   messagingSenderId: "252630066972",
 //   appId: "1:252630066972:web:1e7a8e3d9c4bb327f2fcd9",
 // };
-const firebaseConfig = {
-  apiKey: "AIzaSyCyRf7K8bW3-IWrm-d1bPKvXSjHyt_TxGQ",
-  authDomain: "native-image-location.firebaseapp.com",
-  projectId: "native-image-location",
-  storageBucket: "native-image-location.appspot.com",
-  messagingSenderId: "880740516980",
-  appId: "1:880740516980:web:ec463fbff7248ca992bd21",
-  measurementId: "G-4Z0W57306G",
-};
 
 const app = initializeApp(firebaseConfig);
 

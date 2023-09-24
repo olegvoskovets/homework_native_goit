@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addPostThunk,
   deleteAllPostsThunk,
+  getPostsThunk,
   setPostIdThunk,
 } from "./operations";
 
@@ -28,7 +29,11 @@ const postsSlice = createSlice({
 
       .addCase(setPostIdThunk.pending, pending)
       .addCase(setPostIdThunk.fulfilled, setPostIdFulfilled)
-      .addCase(setPostIdThunk.rejected, rejected),
+      .addCase(setPostIdThunk.rejected, rejected)
+
+      .addCase(getPostsThunk.pending, pending)
+      .addCase(getPostsThunk.fulfilled, getPostsFulfilled)
+      .addCase(getPostsThunk.rejected, rejected),
 });
 
 function addPostFulfilled(state, { payload }) {
@@ -46,6 +51,13 @@ function setPostIdFulfilled(state, { payload }) {
   state.isLoading = false;
   state.isError = null;
   state.currentPostId = payload;
+}
+
+function getPostsFulfilled(state, { payload }) {
+  // console.log("PAYLOAD==", payload);
+  state.isLoading = false;
+  state.isError = null;
+  state.posts = [...payload];
 }
 
 function pending(state) {

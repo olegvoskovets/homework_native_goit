@@ -8,6 +8,7 @@ import { selectImageCurrent } from "../../Redux/Auth/selectors";
 import { imageCurrentReducer } from "../../Redux/Auth/slice";
 
 import * as Location from "expo-location";
+// import { uploadAvatar, uploadImage } from "../../servicesApi/Api";
 
 export default function MyCamera() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -96,13 +97,16 @@ export default function MyCamera() {
                     // console.log("asset", asset);
 
                     const location_image = await LocationImage();
+                    console.log("asset.uri", asset.uri);
+
+                    // const path_uri = await uploadImage(asset.uri);
                     dispatch(
                       imageCurrentReducer({
-                        uri: asset.uri,
-                        locationImage: location_image,
+                        uri,
+                        locationImage,
                       })
                     );
-                    setPath(asset.uri);
+                    // setPath(asset.uri);
                   }
                 }}
               >

@@ -1,5 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addPost, deleteAllPosts, getPostId } from "../../servicesApi/Api";
+import {
+  addPost,
+  deleteAllPosts,
+  getPostId,
+  getPostsDB,
+} from "../../servicesApi/Api";
 
 export const addPostThunk = createAsyncThunk("post/addPost", addPost);
 
@@ -9,3 +14,4 @@ export const deleteAllPostsThunk = createAsyncThunk(
 );
 
 export const setPostIdThunk = createAsyncThunk("post/getPostId", getPostId);
+export const getPostsThunk = createAsyncThunk("post/getPosts", getPostsDB);

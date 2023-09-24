@@ -28,7 +28,7 @@ const RegistrationScreen = ({ toggleUser }) => {
 
     // );
     // dispatch(addUserThunk({ login, email, password, url: null }));
-    console.log("onPressButton", { email, password, displayName: login });
+    // console.log("onPressButton", { email, password, displayName: login });
     dispatch(
       registrationThunkFirebaseDb({ email, password, displayName: login })
     );

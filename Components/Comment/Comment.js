@@ -12,23 +12,37 @@ const Comment = ({ post, guest }) => {
       gap: 16,
     },
     comment: {
-      backgroundColor: "rgba(0, 0, 0, 0.06)",
+      backgroundColor: "rgba(0, 0, 0, 0.03)",
       borderBottomRightRadius: 6,
       borderBottomLeftRadius: 6,
       borderTopLeftRadius: guest ? 6 : 0,
       borderTopRightRadius: !guest ? 6 : 0,
       padding: 16,
+      gap: 8,
     },
     user: {
       width: 28,
       height: 28,
       borderRadius: 100,
     },
+    textComment: {
+      fontSize: 13,
+      color: "#212121",
+    },
+    textDate: {
+      fontSize: 10,
+      color: "#BDBDBD",
+      alignSelf: !guest ? "flex-end" : "flex-start",
+    },
   });
   return (
     <View>
       <View style={styles.block}>
-        <Text style={styles.comment}>{post.comment}</Text>
+        <View style={styles.comment}>
+          <Text style={styles.textComment}>{post.comment}</Text>
+          <Text style={styles.textDate}>{post.date} </Text>
+        </View>
+
         <Image style={styles.user} source={!guest ? guestPhoto : userPhoto} />
       </View>
     </View>

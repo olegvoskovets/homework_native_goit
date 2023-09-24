@@ -3,17 +3,27 @@ import MessageSvg from "../MessageSvg/MessageSvg";
 import RegionLocation from "../RegionLocation/RegionLocation";
 import { useNavigation } from "@react-navigation/native";
 import MapPinSvg from "../MapPinSvg/MapPinSvg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectComments } from "../../Redux/Comments/selectors";
+import { useEffect } from "react";
+import { getCommentsThunk } from "../../Redux/Comments/operations";
 
 const Post = ({ post }) => {
-  console.log("post", post);
+  // console.log("post", post);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const comments = useSelector(selectComments);
-  console.log("comments", comments);
+  // console.log("comments", comments);
+
+  useEffect(() => {
+    // console.log("getCommentsThunk");
+    dispatch(getCommentsThunk());
+  }, [dispatch]);
+
   const getCounterComments = () => {
     let counter = 0;
     comments.forEach((element) => {
+      // console.log("postId=", element.postId, "=", post.id);
       if (element.postId === post.id) counter += 1;
     });
     return counter;

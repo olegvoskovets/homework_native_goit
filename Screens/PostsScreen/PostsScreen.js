@@ -12,15 +12,25 @@ import Maps from "../../Components/Maps/Maps";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts } from "../../Redux/Posts/selectors";
 import Post from "../../Components/Post/Post";
-import { deleteAllPostsThunk } from "../../Redux/Posts/operations";
+import {
+  deleteAllPostsThunk,
+  getPostsThunk,
+} from "../../Redux/Posts/operations";
+import { deleteAllCommentsThunk } from "../../Redux/Comments/operations";
+import { useEffect } from "react";
 
 const PostsScreen = () => {
   const posts = useSelector(selectPosts);
+
   // console.log("POSTS", posts);
   const dispatch = useDispatch();
   const handleDeleteAllPosts = () => {
     dispatch(deleteAllPostsThunk());
+    dispatch(deleteAllCommentsThunk());
   };
+  useEffect(() => {
+    dispatch(getPostsThunk());
+  }, []);
   return (
     <View style={styles.posts}>
       <CurrentUser />

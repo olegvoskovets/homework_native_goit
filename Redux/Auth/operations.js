@@ -25,8 +25,8 @@ export const registrationThunkFirebaseDb = createAsyncThunk(
   "auth/registartionFirebaseDb",
   async (body) => {
     const { email, password, displayName } = body;
-    return await registerDB({ email, password, displayName });
-    // return await updateUserProfile({ displayName });
+    const newUser = await registerDB({ email, password, displayName });
+    return newUser;
   }
 );
 

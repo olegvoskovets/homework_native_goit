@@ -9,18 +9,20 @@ import User2 from "../../assets/user2.jpg";
 import { auth } from "../../config";
 
 const CurrentUser = () => {
-  const curremtUser = useSelector(selectCurrentUserFirebase);
+  const currentUser = useSelector(selectCurrentUserFirebase);
   // const { url } = curremtUser;
   // console.log("curremtUser", curremtUser);
   // console.log("authcurremtUser", auth);
   return (
-    <View style={styles.currentUser}>
-      <Image style={styles.currentImage} source={User2} />
-      <View>
-        <Text style={styles.textUser}>{curremtUser.displayName}</Text>
-        <Text style={styles.textEmail}>{curremtUser.email}</Text>
+    currentUser && (
+      <View style={styles.currentUser}>
+        <Image style={styles.currentImage} source={User2} />
+        <View>
+          <Text style={styles.textUser}>{currentUser.displayName}</Text>
+          <Text style={styles.textEmail}>{currentUser.email}</Text>
+        </View>
       </View>
-    </View>
+    )
   );
 };
 const styles = StyleSheet.create({
